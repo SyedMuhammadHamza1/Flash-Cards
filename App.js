@@ -13,6 +13,7 @@ import DeckList from "./src/components/DeckList";
 import OpenDeck from "./src/components/OpenDeck";
 import AddCard from "./src/components/AddCard";
 import CreateDeck from "./src/components/CreateDeck";
+import Quiz from "./src/components/Quiz";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -34,6 +35,13 @@ function DecksStackScreen() {
         component={AddCard}
         options={{
           headerTitle: "Add Card",
+        }}
+      />
+      <DecksStack.Screen
+        name="quiz"
+        component={Quiz}
+        options={{
+          headerTitle: "Quiz",
         }}
       />
     </DecksStack.Navigator>
@@ -67,8 +75,6 @@ function AppNavigator() {
             } else if (route.name === "addDecks") {
               iconName = focused ? "ios-list-box" : "ios-list";
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
