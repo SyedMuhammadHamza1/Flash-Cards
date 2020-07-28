@@ -1,29 +1,30 @@
-import { AsyncStorage } from 'react-native'
-import { decks } from '../utils/_DATA'
+import { AsyncStorage } from "react-native";
+import { decks } from "../utils/_DATA";
 
-const DECKS_DATA = 'DECKS_DATA'
+const DECKS_DATA = "DECKS_DATA";
 
 export const getInitialData = async () => {
+  debugger;
   try {
     // await AsyncStorage.clear()
     const data = await AsyncStorage.getItem(DECKS_DATA);
-    
-    if(data){ 
-      const decksData = JSON.parse(data)
+
+    if (data) {
+      const decksData = JSON.parse(data);
       return decksData;
-    }else{
+    } else {
       const decksData = await AsyncStorage.setItem(
         DECKS_DATA,
         JSON.stringify(decks)
-      )
-      return decksData
-    } 
-  } catch (error){
-    console.log(error)
+      );
+      return decksData;
+    }
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
-export const getDeck = async(id) => {
+export const getDeck = async (id) => {
   try {
     const decks = await AsyncStorage.getItem(DECKS_DATA);
 
@@ -31,11 +32,11 @@ export const getDeck = async(id) => {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 export const addDeckAS = async (data) => {
   try {
-    const {title, id} = data
+    const { title, id } = data;
     await AsyncStorage.mergeItem(
       DECKS_DATA,
       JSON.stringify({
@@ -43,33 +44,30 @@ export const addDeckAS = async (data) => {
           id,
           title,
           questions: [],
-        }
+        },
       })
-    )
-    
-  } catch (error){
-    console.log(error)
+    );
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const addCardAS = async (deckData, card) => {
   try {
-
     const deck = await getDeck(deckData.id);
 
     await AsyncStorage.mergeItem(
       DECKS_DATA,
       JSON.stringify({
         [deckData.id]: {
-          questions: [...deck.questions].concat(card)
-        }
+          questions: [...deck.questions].concat(card),
+        },
       })
     );
-    
-  } catch (error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export async function deleteDeckAS(key) {
   try {
