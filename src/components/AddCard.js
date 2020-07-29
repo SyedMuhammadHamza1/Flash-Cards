@@ -6,8 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StyleSheet,
+  Dimensions,
 } from "react-native";
-import { styles, colors } from "../styles/styles";
+import { colors } from "../styles/styles";
 import { connect } from "react-redux";
 import { addCardDeck } from "../actions";
 import { addCardAS } from "../utils/dataHandler";
@@ -42,22 +44,22 @@ class AddCard extends Component {
     const { question, answer } = this.state;
     const disabled = question === "" || answer === "" ? true : false;
     return (
-      <View style={styles.container}>
+      <View style={Styles.container}>
         <SafeAreaView>
           <KeyboardAvoidingView behavior="padding">
             <View style={{ height: "100%", justifyContent: "center" }}>
-              <Text style={[styles.heading, { marginBottom: 40 }]}>
-                Please enter following to add new card
+              <Text style={[Styles.heading, { marginBottom: 40 }]}>
+                Fill fields to add new Card in the Deck
               </Text>
               <TextInput
-                style={styles.input}
+                style={Styles.input}
                 value={this.state.question}
                 placeholder="Enter Question"
                 name="question"
                 onChange={this.handleInput}
               />
               <TextInput
-                style={styles.input}
+                style={Styles.input}
                 value={this.state.answer}
                 placeholder="Enter Answer"
                 name="answer"
@@ -67,14 +69,14 @@ class AddCard extends Component {
               <TouchableOpacity
                 onPress={this.handleSubmit}
                 style={[
-                  styles.button,
+                  Styles.button,
                   {
                     backgroundColor: disabled ? colors.disabled : colors.blue,
                     marginTop: 40,
                   },
                 ]}
               >
-                <Text style={styles.text}>Submit</Text>
+                <Text style={Styles.text}>Submit</Text>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
@@ -83,6 +85,42 @@ class AddCard extends Component {
     );
   }
 }
+
+const Styles = StyleSheet.create({
+  button: {
+    color: "#444",
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 5,
+    width: 250,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#dedede",
+    margin: 5,
+    borderRadius: 2,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#444",
+  },
+  text: {
+    color: "white",
+  },
+  buttonView: {
+    flexDirection: "row",
+    marginTop: 40,
+  },
+});
 
 const mapStateToProps = (state, { route }) => {
   const { deck } = route.params;

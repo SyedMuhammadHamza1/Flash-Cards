@@ -230,14 +230,7 @@ const Styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 7,
   },
-  button: {
-    color: "#444",
-    padding: 10,
-    alignItems: "center",
-    alignSelf: "center",
-    borderRadius: 5,
-    width: 250,
-  },
+
   quizButton: {
     padding: 10,
     alignItems: "center",

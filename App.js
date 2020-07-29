@@ -14,6 +14,7 @@ import OpenDeck from "./src/components/OpenDeck";
 import AddCard from "./src/components/AddCard";
 import CreateDeck from "./src/components/CreateDeck";
 import Quiz from "./src/components/Quiz";
+import { setLocalNotification } from "./src/utils/notificaationHandler";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -51,9 +52,9 @@ function DecksStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  // useEffect(() => {
-  //   setLocalNotification();
-  // }, []);
+  useEffect(() => {
+    setLocalNotification();
+  }, []);
 
   return (
     <Provider store={store}>
@@ -88,12 +89,3 @@ function AppNavigator() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

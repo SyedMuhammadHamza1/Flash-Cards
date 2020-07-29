@@ -6,8 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StyleSheet,
 } from "react-native";
-import { styles, colors } from "../styles/styles";
+import { colors } from "../styles/styles";
 import { addDeckAS } from "../utils/dataHandler";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
@@ -43,17 +44,17 @@ class CreateDeck extends Component {
     const { deckName } = this.state;
     const disabled = deckName === "";
     return (
-      <View style={styles.container}>
+      <View style={Styles.container}>
         <SafeAreaView>
           <KeyboardAvoidingView keyboardShouldPersistTaps="handled">
-            <Text style={[styles.heading, { marginBottom: 40 }]}>
+            <Text style={[Styles.heading, { marginBottom: 40 }]}>
               What is the title of your new deck?
             </Text>
 
             <TextInput
               value={deckName}
               name="deckName"
-              style={styles.input}
+              style={Styles.input}
               placeholder="Enter Dack Name"
               onChange={this.handleInput}
             />
@@ -61,7 +62,7 @@ class CreateDeck extends Component {
             <TouchableOpacity
               onPress={this.handleSubmit}
               style={[
-                styles.button,
+                Styles.button,
                 {
                   backgroundColor: disabled ? colors.disabled : colors.green,
                   marginTop: 40,
@@ -70,7 +71,7 @@ class CreateDeck extends Component {
               disabled={disabled}
               value={deckName}
             >
-              <Text style={styles.text}>Create Deck</Text>
+              <Text style={Styles.text}>Create Deck</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </SafeAreaView>
@@ -78,5 +79,40 @@ class CreateDeck extends Component {
     );
   }
 }
+const Styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#dedede",
+    margin: 5,
+    borderRadius: 2,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    color: "#444",
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 5,
+    width: 250,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#444",
+  },
+  text: {
+    color: "white",
+  },
 
+  buttonView: {
+    flexDirection: "row",
+    marginTop: 40,
+  },
+});
 export default connect(null, { addDeck })(CreateDeck);
