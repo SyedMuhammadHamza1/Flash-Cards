@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";

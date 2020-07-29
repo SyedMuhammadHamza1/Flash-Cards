@@ -105,7 +105,6 @@ const Styles = StyleSheet.create({
     width: 350,
     alignItems: "center",
     marginTop: 6,
-    marginRight: 10,
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#dedede",
