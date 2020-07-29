@@ -5,8 +5,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StyleSheet,
+  Dimensions,
 } from "react-native";
-import { styles, colors } from "../styles/styles";
+import { colors } from "../styles/styles";
 import { connect } from "react-redux";
 import {
   setLocalNotification,
@@ -83,12 +85,12 @@ function Quiz({ navigation, deck, title }) {
 
   if (!questions.length) {
     return (
-      <View style={styles.container}>
-        <Text style={[styles.count, { textAlign: "center" }]}>
-          You cannot take a quiz because there are no cards in the deck.
+      <View style={Styles.container}>
+        <Text style={{ textAlign: "center" }}>
+          No Cards Found in this DECK.
         </Text>
-        <Text style={[styles.count, { textAlign: "center" }]}>
-          Please add some cards and try again.
+        <Text style={{ textAlign: "center" }}>
+          Add Cards to start the QUIZ.
         </Text>
       </View>
     );
@@ -100,7 +102,7 @@ function Quiz({ navigation, deck, title }) {
   let bodyRef = useRef();
 
   return (
-    <View style={styles.container}>
+    <View style={Styles.container}>
       <SafeAreaView>
         {currentView === view.RESULT ? (
           <View>
@@ -110,30 +112,30 @@ function Quiz({ navigation, deck, title }) {
                 size={50}
                 color={resultColor}
               />
-              <Text style={[styles.heading, { marginBottom: 10 }]}>
+              <Text style={[Styles.heading, { marginBottom: 10 }]}>
                 Quiz Complete
               </Text>
-              <Text style={[styles.mutedText, { marginBottom: 10 }]}>
+              <Text style={[Styles.mutedText, { marginBottom: 10 }]}>
                 {correct} / {questionsCount} correct answers
               </Text>
               <Text>{percent}%</Text>
             </View>
 
-            <View style={styles.buttonView}>
+            <View style={Styles.buttonView}>
               <TouchableOpacity
-                style={[styles.quizButton, { backgroundColor: colors.black }]}
+                style={[Styles.quizButton, { backgroundColor: colors.black }]}
                 onPress={handleReset}
               >
-                <Text style={[styles.text, { color: "white" }]}>
+                <Text style={[Styles.text, { color: "white" }]}>
                   Restart Quiz
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.quizButton, { backgroundColor: colors.red }]}
+                style={[Styles.quizButton, { backgroundColor: colors.red }]}
                 onPress={handleQuit}
               >
-                <Text style={[styles.text, { color: "white" }]}>
+                <Text style={[Styles.text, { color: "white" }]}>
                   Back to Deck
                 </Text>
               </TouchableOpacity>
@@ -142,23 +144,23 @@ function Quiz({ navigation, deck, title }) {
         ) : (
           <KeyboardAvoidingView behavior="padding">
             <ViewPager
-              style={styles.viewPager}
+              style={Styles.viewPager}
               initialPage={0}
               ref={(viewPage) => {
                 bodyRef = viewPage;
               }}
             >
               {questions.map((question, index) => (
-                <View style={styles.page} key={index}>
+                <View style={Styles.page} key={index}>
                   <Text>
                     {index + 1} / {questions.length}
                   </Text>
-                  <View style={styles.questionCard}>
-                    <Text style={styles.heading}>
+                  <View style={[Styles.questionCard, Styles.cardBox]}>
+                    <Text style={Styles.heading}>
                       {currentView === view.QUESTION ? "Question" : "Answer"}
                     </Text>
                     <View>
-                      <Text style={styles.question}>
+                      <Text style={Styles.question}>
                         {currentView === view.QUESTION
                           ? question.question
                           : question.answer}
@@ -170,7 +172,7 @@ function Quiz({ navigation, deck, title }) {
                       <TouchableOpacity
                         onPress={() => setCurrentView(view.ANSWER)}
                       >
-                        <Text style={[styles.text, { color: "red" }]}>
+                        <Text style={[Styles.text, { color: "red" }]}>
                           Show Answer
                         </Text>
                       </TouchableOpacity>
@@ -178,33 +180,33 @@ function Quiz({ navigation, deck, title }) {
                       <TouchableOpacity
                         onPress={() => setCurrentView(view.QUESTION)}
                       >
-                        <Text style={[styles.text, { color: "red" }]}>
+                        <Text style={[Styles.text, { color: "red" }]}>
                           Hide Answer
                         </Text>
                       </TouchableOpacity>
                     )}
                   </View>
 
-                  <View style={styles.buttonView}>
+                  <View style={Styles.buttonView}>
                     <TouchableOpacity
                       onPress={() => handleAnswer(answer.CORRECT, index)}
                       disabled={answered[index] === 1}
                       style={[
-                        styles.quizButton,
+                        Styles.quizButton,
                         { backgroundColor: colors.green },
                       ]}
                     >
-                      <Text style={styles.text}>Correct</Text>
+                      <Text style={Styles.text}>Correct</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => handleAnswer(answer.INCORRECT, index)}
                       disabled={answered[index] === 1}
                       style={[
-                        styles.quizButton,
+                        Styles.quizButton,
                         { backgroundColor: colors.red },
                       ]}
                     >
-                      <Text style={styles.text}>Incorrect</Text>
+                      <Text style={Styles.text}>Incorrect</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -217,6 +219,73 @@ function Quiz({ navigation, deck, title }) {
   );
 }
 
+const Styles = StyleSheet.create({
+  cardBox: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+  },
+  button: {
+    color: "#444",
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 5,
+    width: 250,
+  },
+  quizButton: {
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    width: 150,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#444",
+  },
+  text: {
+    color: "white",
+  },
+  viewPager: {
+    flex: 1,
+    width: Dimensions.get("window").width,
+    height: "50%",
+  },
+  page: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  questionCard: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    width: 300,
+    alignItems: "center",
+    backgroundColor: "#DCDCDC",
+    height: 200,
+    padding: 10,
+  },
+  question: {
+    fontSize: 18,
+    marginTop: 40,
+  },
+  buttonView: {
+    flexDirection: "row",
+    marginTop: 40,
+  },
+});
 const mapStateToProps = (state, { route }) => {
   const { id } = route.params;
   const deck = state[id];

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { styles, colors } from "../styles/styles";
+import { colors } from "../styles/styles";
 import { connect } from "react-redux";
 import { deleteDeck } from "../actions";
 import { deleteDeckAS } from "../utils/dataHandler";
@@ -49,36 +49,36 @@ function OpenDeck({ route, navigation, deleteDeck, deck }) {
   const { color } = route.params;
 
   return (
-    <View style={styles.container}>
+    <View style={Styles.container}>
       <SafeAreaView>
         <View style={{ height: "90%", justifyContent: "center" }}>
           <View style={[Styles.cardBox, { backgroundColor: color }]}>
-            <Text style={styles.heading}>{title}</Text>
+            <Text style={Styles.heading}>{title}</Text>
             <Text>{questions.length} Cards</Text>
           </View>
 
           <TouchableOpacity
             style={[
-              styles.button,
+              Styles.button,
               { backgroundColor: colors.blue, marginBottom: 20 },
             ]}
             onPress={() => navigation.navigate("AddCard", { deck: deck })}
           >
-            <Text style={styles.text}>Add Card</Text>
+            <Text style={Styles.text}>Add Card</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: colors.green }]}
+            style={[Styles.button, { backgroundColor: colors.green }]}
             onPress={() => navigation.navigate("quiz", { id: deck.id })}
           >
-            <Text style={styles.text}>Start Quiz</Text>
+            <Text style={Styles.text}>Start Quiz</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.container}>
-          <TouchableOpacity style={styles.deleteButton}>
+        <View style={Styles.container}>
+          <TouchableOpacity style={Styles.deleteButton}>
             <Text
-              style={[styles.text, { color: "red", marginBottom: 20 }]}
+              style={[Styles.text, { color: "red", marginBottom: 20 }]}
               onPress={handleOnPress}
             >
               Delete Deck
@@ -113,7 +113,32 @@ const Styles = StyleSheet.create({
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-
     elevation: 7,
+  },
+  button: {
+    color: "#444",
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 5,
+    width: 250,
+  },
+  deleteButton: {
+    position: "absolute",
+    bottom: 0,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#444",
+  },
+  text: {
+    color: "white",
   },
 });

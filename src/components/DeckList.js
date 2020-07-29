@@ -7,76 +7,31 @@ import {
   FlatList,
   SafeAreaView,
   StyleSheet,
-  Dimensions,
 } from "react-native";
 import { handleInitialData } from "../actions";
 import { connect } from "react-redux";
-import { styles } from "../styles/styles";
 
 class DeckList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newDecks: [],
       loading: false,
     };
   }
 
   componentDidMount() {
-    let colors = [
-      "#FFD700",
-      "#FA8072",
-      "#3CB371",
-      "#91b200",
-      "#dff902",
-      "#ffff00",
-      "#8cc939",
-      "#feb117",
-    ];
     this.props.handleInitialData();
-    let newDecks = Object.values(this.props.decks).map((item, index) => {
-      return {
-        id: item.id,
-        title: item.title,
-        questions: item.questions,
-        color: colors[index],
-      };
-    });
-    this.setState({
-      newDecks,
-    });
   }
 
   render() {
     const { navigation } = this.props;
-    const { newDecks, loading } = this.state;
+    const { loading } = this.state;
 
     const fetchData = async () => {
-      let colors = [
-        "#FFD700",
-        "#FA8072",
-        "#3CB371",
-        "#91b200",
-        "#dff902",
-        "#ffff00",
-        "#8cc939",
-        "#feb117",
-      ];
       this.setState({
         loading: true,
       });
       this.props.handleInitialData();
-      let newDecks = Object.values(this.props.decks).map((item, index) => {
-        return {
-          id: item.id,
-          title: item.title,
-          questions: item.questions,
-          color: colors[index],
-        };
-      });
-      this.setState({
-        newDecks,
-      });
       this.setState({
         loading: false,
       });
@@ -104,7 +59,6 @@ class DeckList extends Component {
       );
     }
     console.log("Props comimg", this.props);
-    console.log("New Deck Data", newDecks);
     return (
       <View style={Styles.container}>
         <StatusBar barStyle="dark-content" />
@@ -148,7 +102,6 @@ const Styles = StyleSheet.create({
   },
   listItem: {
     flex: 1,
-    // width: Dimensions.get("window").width,
     width: 350,
     alignItems: "center",
     marginTop: 6,
