@@ -52,10 +52,31 @@ class DeckList extends Component {
     const { newDecks, loading } = this.state;
 
     const fetchData = async () => {
+      let colors = [
+        "#FFD700",
+        "#FA8072",
+        "#3CB371",
+        "#91b200",
+        "#dff902",
+        "#ffff00",
+        "#8cc939",
+        "#feb117",
+      ];
       this.setState({
         loading: true,
       });
       this.props.handleInitialData();
+      let newDecks = Object.values(this.props.decks).map((item, index) => {
+        return {
+          id: item.id,
+          title: item.title,
+          questions: item.questions,
+          color: colors[index],
+        };
+      });
+      this.setState({
+        newDecks,
+      });
       this.setState({
         loading: false,
       });
@@ -93,7 +114,7 @@ class DeckList extends Component {
             <Text style={Styles.mainHeading}>ALL DECK LIST</Text>
           </View>
           <FlatList
-            data={newDecks}
+            data={this.props.decks}
             renderItem={({ item }) => <RenderItem item={item} />}
             keyExtractor={(item) => item.id}
             onRefresh={fetchData}
@@ -147,7 +168,27 @@ const Styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
-  decks: state,
-});
+const mapStateToProps = (state) => {
+  let colors = [
+    "#FFD700",
+    "#FA8072",
+    "#3CB371",
+    "#91b200",
+    "#dff902",
+    "#ffff00",
+    "#8cc939",
+    "#feb117",
+  ];
+  let newDecks = Object.values(state).map((item, index) => {
+    return {
+      id: item.id,
+      title: item.title,
+      questions: item.questions,
+      color: colors[index],
+    };
+  });
+  return {
+    decks: newDecks,
+  };
+};
 export default connect(mapStateToProps, { handleInitialData })(DeckList);
