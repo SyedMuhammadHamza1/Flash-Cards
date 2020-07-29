@@ -5,7 +5,7 @@ import {
   Alert,
   SafeAreaView,
   TouchableOpacity,
-  AsyncStorage,
+  StyleSheet,
 } from "react-native";
 import { styles, colors } from "../styles/styles";
 import { connect } from "react-redux";
@@ -46,12 +46,13 @@ function OpenDeck({ route, navigation, deleteDeck, deck }) {
   }
 
   const { title, questions, id } = deck;
+  const { color } = route.params;
 
   return (
     <View style={styles.container}>
       <SafeAreaView>
         <View style={{ height: "90%", justifyContent: "center" }}>
-          <View style={{ alignItems: "center", marginBottom: 40 }}>
+          <View style={[Styles.cardBox, { backgroundColor: color }]}>
             <Text style={styles.heading}>{title}</Text>
             <Text>{questions.length} Cards</Text>
           </View>
@@ -77,7 +78,7 @@ function OpenDeck({ route, navigation, deleteDeck, deck }) {
         <View style={styles.container}>
           <TouchableOpacity style={styles.deleteButton}>
             <Text
-              style={[styles.text, { color: "red" }]}
+              style={[styles.text, { color: "red", marginBottom: 20 }]}
               onPress={handleOnPress}
             >
               Delete Deck
@@ -98,3 +99,21 @@ const mapStateToProps = (state, { route }) => {
 export default connect(mapStateToProps, {
   deleteDeck,
 })(OpenDeck);
+
+const Styles = StyleSheet.create({
+  cardBox: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 60,
+    height: 90,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
+  },
+});

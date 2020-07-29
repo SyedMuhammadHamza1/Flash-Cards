@@ -69,7 +69,7 @@ function Quiz({ navigation, deck, title }) {
 
   const handleQuit = () => {
     handleReset();
-    navigation.navigate("deckDetails");
+    navigation.navigate("openDeck");
   };
 
   const handleReset = () => {
