@@ -26,6 +26,12 @@ function createNotification() {
   };
 }
 
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
+}
+
 function createChannel() {
   return {
     name: "Daily Reminder",
