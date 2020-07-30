@@ -21,7 +21,7 @@ function OpenDeck({ route, navigation, deleteDeck, deck }) {
 
   function handleOnPress() {
     Alert.alert(
-      `Are you sure you want to delete ${deck.title}`,
+      `Are you sure you want to delete ${deck.title}?`,
       "",
       [
         {
